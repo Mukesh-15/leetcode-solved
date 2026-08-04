@@ -1,23 +1,22 @@
 class Solution {
     public int stoneGameVI(int[] aliceValues, int[] bobValues) {
         int n = aliceValues.length;
-        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> Integer.compare(aliceValues[b] + bobValues[b], aliceValues[a] + bobValues[a]));
+        Integer[] idxs = new Integer[n];
 
         for(int i = 0; i < n; i++){
-            pq.add(i);
+            idxs[i] = i;
         }
 
+        Arrays.sort(idxs, (a, b) -> Integer.compare(aliceValues[b] + bobValues[b], aliceValues[a] + bobValues[a]));
+
         int alice = 0, bob = 0;
-        boolean aliceTurn  = true;
-
-        while(!pq.isEmpty()){
-            if(aliceTurn){
-                alice += aliceValues[pq.poll()];
+        
+        for(int i = 0; i < n; i++){
+            if(i % 2 == 0){
+                alice += aliceValues[idxs[i]];
             }else{
-                bob += bobValues[pq.poll()];
+                bob += bobValues[idxs[i]];
             }
-
-            aliceTurn = !aliceTurn;
         }
 
         return (alice > bob) ? 1 : (bob > alice) ? -1 : 0;
