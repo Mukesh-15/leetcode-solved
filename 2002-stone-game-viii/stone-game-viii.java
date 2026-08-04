@@ -8,12 +8,12 @@ class Solution {
             prefix[i] = prefix[i - 1] + stones[i];
         }
 
-        int best = prefix[n - 1];
+        int res = prefix[n - 1];
 
         for(int i = n - 2; i >= 1; i--){
-            best = Math.max(best, prefix[i] - best);
+            res = Math.max(res, prefix[i] - res);
         }
 
-        return best;
+        return res;
     }
 }
